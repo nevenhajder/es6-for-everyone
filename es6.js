@@ -1,18 +1,21 @@
-const data = {
-    w: '500px',
-    h: '250px',
-    x: '20px',
-    y: '20px'
-};
+const details = ['Wes Bos', 123, 'wesbos.com'];
+const [name, id, website] = details;
+console.log(name);
+console.log(id);
+console.log(website);
+console.log('-----');
 
-const {
-    w: width,
-    h: height,
-    x: posX,
-    y: posY
-} = data;
+const data = 'Basketball,sports,90210,wes,bos,cool';
+const [itemName, category, sku, inventory] = data.split(',');
+console.log(itemName);
+console.log(category);
+console.log(sku);
+console.log(inventory);
+console.log('-----');
 
-console.log(width);
-console.log(height);
-console.log(posX);
-console.log(posY);
+const team = ['Wes', 'Harry', 'Sarah', 'Keegan', 'Riker'];
+const [captain, assistant, ...players] = team;
+console.log(captain);
+console.log(assistant);
+console.log(players);
+console.log('-----');
