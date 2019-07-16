@@ -1,21 +1,21 @@
-const details = ['Wes Bos', 123, 'wesbos.com'];
-const [name, id, website] = details;
-console.log(name);
-console.log(id);
-console.log(website);
+function convertCurrency(amount) {
+    const converted = {
+        USD: amount * 0.76,
+        GBP: amount * 0.53,
+        AUD: amount * 1.01,
+        MEX: amount * 13.30
+    }
+
+    return converted;
+}
+
+const {USD, GBP, AUD, MEX} = convertCurrency(100);
+console.log(USD, GBP);
 console.log('-----');
 
-const data = 'Basketball,sports,90210,wes,bos,cool';
-const [itemName, category, sku, inventory] = data.split(',');
-console.log(itemName);
-console.log(category);
-console.log(sku);
-console.log(inventory);
-console.log('-----');
+function tipCalc({ total, tip = 0.15, tax = 0.13 }) {
+    return total + (total * tip) + (total * tax);
+};
 
-const team = ['Wes', 'Harry', 'Sarah', 'Keegan', 'Riker'];
-const [captain, assistant, ...players] = team;
-console.log(captain);
-console.log(assistant);
-console.log(players);
-console.log('-----');
+const bill = tipCalc({ total: 100 });
+console.log(bill);
