@@ -1,9 +1,7 @@
-const ages = [32, 15, 18, 19, 10];
+const heading = document.querySelector('.jump');
 
-// Checks if some items in the array meet the criteria
-const adultPresent = ages.some(age => age >= 18);
-console.log(adultPresent);
+heading.innerHTML = spanWrap(heading.textContent);
 
-// Checks if all items in the array meet the criteria
-const allOldEnough = ages.every(age => age >= 18);
-console.log(allOldEnough);
+function spanWrap(word) {
+    return [...word].map(letter => `<span>${letter}</span>`).join('');
+}
