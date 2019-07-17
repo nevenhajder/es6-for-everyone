@@ -1,25 +1,13 @@
 const listItems = document.querySelectorAll('li');
 
-// Iterate over Node List using a traditional for loop
-// for (var i=0; i < listItems.length; i++) {
-//     listItems[i].textContent = `list item ${i + 1}`;
-// }
+// Error! listItems.map is not a function
+// const mappedItems = listItems.map(item => item.textContent);
 
 
-// Node List has the forEach method!
-// listItems.forEach((el, i) => el.textContent = `list item ${i + 1}`);
+// Converts array-like or iterable object to an array
+// const listItemsArray = Array.from(listItems);
+// const mappedItemsFromArray = listItemsArray.map(item => item.textContent);
 
 
-// Iterates over the prototype methods and properties!!!
-// for (const index in listItems) {
-//     console.log(index);
-// }
-
-
-// Can use break or continue
-for (const [index, item] of listItems.entries()) {
-    if (index === 2) {
-        continue;
-    }
-    item.textContent = `list item ${index + 1}`;
-}
+// Array.from also takes a map function as its second parameter
+const mappedItems = Array.from(listItems, item => item.textContent);
