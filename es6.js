@@ -18,12 +18,25 @@ function getPostById(id) {
             if (foundPost) {
                 resolve(foundPost);
             } else {
-                reject(Error);
+                reject(Error('No post found.'));
             }
         }, 1000);
     });
 }
 
-getPostById(2)
+function hydratePost(post) {
+    return new Promise((resolve, reject) => {
+        const authorDetails = authors.find(author => post.author === author.name);
+        if (authorDetails) {
+            post.author = authorDetails;
+            resolve(post);
+        } else {
+            reject(Error('No author found.'));
+        }
+    });
+}
+
+getPostById(3)
+    .then(post => hydratePost(post))
     .then(post => console.log(post))
-    .catch(() => console.log('No post found.'));
+    .catch(err => console.error(err));
