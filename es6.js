@@ -1,42 +1,32 @@
-const posts = [
-    { title: 'I love JavaScript', author: 'Wes Bos', id: 1 },
-    { title: 'CSS!', author: 'Chris Coyier', id: 2 },
-    { title: 'Dev tools tricks', author: 'Addy Osmani', id: 3 },
-];
+// Example simulating API calls
+const weather = new Promise((resolve) => {
+    setTimeout(() => {
+        resolve({ temp: 29, weather: 'Sunny with clouds' });
+    }, 2000);
+});
 
-const authors = [
-    { name: 'Wes Bos', twitter: '@wesbos', bio: 'Canadian Developer' },
-    { name: 'Chris Coyier', twitter: '@chriscoyier', bio: 'CSS Tricks and CodePen' },
-    { name: 'Addy Osmani', twitter: '@addyosmani', bio: 'Googler' },
-];
+const tweets = new Promise((resolve) => {
+    setTimeout(() => {
+        resolve(['I like cake.', 'BBQ is good!']);
+    }, 500);
+});
 
-function getPostById(id) {
-    return new Promise((resolve, reject) => {
-        // mimick database with timeout
-        setTimeout(() => {
-            const foundPost = posts.find(post => post.id === id);
-            if (foundPost) {
-                resolve(foundPost);
-            } else {
-                reject(Error('No post found.'));
-            }
-        }, 1000);
+Promise
+    .all([weather, tweets])
+    .then((responses) => {
+        const [weatherInfo, tweetInfo] = responses;
+        // console.log(weatherInfo, tweetInfo);
     });
-}
 
-function hydratePost(post) {
-    return new Promise((resolve, reject) => {
-        const authorDetails = authors.find(author => post.author === author.name);
-        if (authorDetails) {
-            post.author = authorDetails;
-            resolve(post);
-        } else {
-            reject(Error('No author found.'));
-        }
-    });
-}
 
-getPostById(3)
-    .then(post => hydratePost(post))
-    .then(post => console.log(post))
-    .catch(err => console.error(err));
+// Example with API calls
+const postsPromise = fetch('http://wesbos.com/wp-json/wp/v2/posts');
+const streetCarsPromise = fetch('http://data.ratp.fr/api/datasets/1.0/search/?q=paris');
+
+Promise
+    .all([postsPromise, streetCarsPromise])
+    .then((responses) => {
+        // At this point responses are a readable stream that needs to be converted to JSON
+        return Promise.all(responses.map(response => response.json()));
+    })
+    .then(responses => console.log(responses));
