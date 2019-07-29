@@ -1,25 +1,30 @@
-class Dog {
-    constructor(name, breed) {
+class Animal {
+    constructor(name) {
         this.name = name;
-        this.breed = breed;
+        this.thirst = 100;
+        this.belly = [];
     }
 
-    bark() {
-        console.log(`Bark! Bark! My name is ${this.name}`);
+    drink() {
+        this.thirst -= 10;
+        return this.thirst;
     }
 
-    cuddle() {
-        console.log('I love you owner!');
-    }
-
-    set nicknames(name) {
-        this.nick = name.trim();
-    }
-
-    get nicknames() {
-        return this.nick;
+    eat(food) {
+        this.belly.push(food);
+        return this.belly;
     }
 }
 
-const Snickers = new Dog('Snickers', 'King Charles');
-console.log(Snickers);
+class Dog extends Animal {
+    constructor(name, breed) {
+        // The super() method calls the class that is being extended
+        // then applies the sub-class on top of that
+        super(name);
+        // The breed property will only be on the Dog class
+        this.breed = breed;
+    }
+}
+
+const rhiney = new Animal('Rhiney');
+const snickers = new Dog('Snickers', 'King Charles');
