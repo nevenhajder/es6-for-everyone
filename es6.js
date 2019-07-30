@@ -1,29 +1,16 @@
-class MovieCollection extends Array {
-    // The rest operator (...) collects all of the movies passed into the constructor
-    // as an iterable collection
-    constructor(name, ...movies) {
-        // The spread (...) operator spreads each movie into its own item in the array
-        super(...movies);
-        this.name = name;
-    }
-
-    add(newMovie) {
-        this.push(newMovie);
-    }
-
-    topRated(limit = 10) {
-        return this.sort((a, b) => (a.stars > b.stars ? -1 : 1)).slice(0, limit);
-    }
+// A generator function yields a new value each time it's called
+// until it has reached the final yield statement.
+function* generatorExample() {
+    yield '1';
+    yield '2';
+    yield '3';
 }
 
-const movies = new MovieCollection('Wes\'s favourite movies.',
-    { name: 'Bee Movie', stars: 10 },
-    { name: 'Star Wars Trek', stars: 1 },
-    { name: 'Virgin Suicides', stars: 7 },
-    { name: 'King of the Road', stars: 8 }
-);
+const count = generatorExample();
 
-movies.add({ name: 'Spiderverse', stars: 9 });
-
-// Console statement reassigns the name property to whatever is passed into it.
-console.table(movies.topRated(4));
+// Calling .next() on a generator function returns
+// an object with the properties 'done' and 'value'.
+console.log(count.next());
+console.log(count.next());
+console.log(count.next());
+console.log(count.next());
