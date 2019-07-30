@@ -1,30 +1,29 @@
-class Animal {
-    constructor(name) {
+class MovieCollection extends Array {
+    // The rest operator (...) collects all of the movies passed into the constructor
+    // as an iterable collection
+    constructor(name, ...movies) {
+        // The spread (...) operator spreads each movie into its own item in the array
+        super(...movies);
         this.name = name;
-        this.thirst = 100;
-        this.belly = [];
     }
 
-    drink() {
-        this.thirst -= 10;
-        return this.thirst;
+    add(newMovie) {
+        this.push(newMovie);
     }
 
-    eat(food) {
-        this.belly.push(food);
-        return this.belly;
+    topRated(limit = 10) {
+        return this.sort((a, b) => (a.stars > b.stars ? -1 : 1)).slice(0, limit);
     }
 }
 
-class Dog extends Animal {
-    constructor(name, breed) {
-        // The super() method calls the class that is being extended
-        // then applies the sub-class on top of that
-        super(name);
-        // The breed property will only be on the Dog class
-        this.breed = breed;
-    }
-}
+const movies = new MovieCollection('Wes\'s favourite movies.',
+    { name: 'Bee Movie', stars: 10 },
+    { name: 'Star Wars Trek', stars: 1 },
+    { name: 'Virgin Suicides', stars: 7 },
+    { name: 'King of the Road', stars: 8 }
+);
 
-const rhiney = new Animal('Rhiney');
-const snickers = new Dog('Snickers', 'King Charles');
+movies.add({ name: 'Spiderverse', stars: 9 });
+
+// Console statement reassigns the name property to whatever is passed into it.
+console.table(movies.topRated(4));
