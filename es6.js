@@ -1,34 +1,48 @@
-const brunch = new Set();
+const dogs = new Map();
 
-brunch.add('Wes');
-brunch.add('Sarah');
-brunch.add('Simone');
+dogs.set('Snickers', 3);
+dogs.set('Sunny', 2);
+dogs.set('Hugo', 10);
 
-const line = brunch.values();
-// console.log(line.next().value);
-// console.log(line.next().value);
+dogs.forEach((val, key) => console.log(val, key));
 
-// You can iterate over sets
-// but not over weak sets
-for (const person of brunch) {
-    console.log(person);
+for (const [val, key] of dogs) {
+    console.log(val, key);
 }
 
-brunch.add('Snickers');
-brunch.add('Heather');
+// Maps allow you to set anything(!) as the key in the key-value pairing
+const buttonMap = new Map();
+const buttons = document.querySelectorAll('button');
+
+buttons.forEach((button) => {
+    // Set each button to be the key in the map
+    buttonMap.set(button, 0);
+    button.addEventListener('click', function () {
+        // Get current click count from the map for this button
+        const val = buttonMap.get(this);
+        buttonMap.set(this, val + 1);
+        console.log(buttonMap);
+    });
+});
+
 
 // ----------------------------------------------------------------------------
 
-// Weak sets (weakly held sets) can only contain objects
-const dog1 = { name: 'Snickers', age: 3 };
-let dog2 = { name: 'Sunny', age: 1 };
+// Map vs Weak Map
+let dog1 = { name: 'Snickers' };
+let dog2 = { name: 'Sunny' };
 
-const weakness = new WeakSet([dog1, dog2]);
+const strong = new Map();
+const weak = new WeakMap();
 
-console.log(weakness);
+strong.set(dog1, 'Snickers is the best!');
+weak.set(dog2, 'Sunny is second best!');
+
+console.log(strong);
+console.log(weak);
+dog1 = null;
 dog2 = null;
-console.log(weakness);
-// At some point between the console.log right above and this timeout log
-// the reference to dog2 is garbage collected from the weak set
-// since dog2 has been manually set to null. This is what is meant by "weakly held sets"
-setTimeout(() => console.log(weakness), 4000);
+// In a weak map the reference to dog2 will get garbage collected
+// since the object has been set to null, but the regular map retains the reference.
+console.log(strong);
+console.log(weak);
