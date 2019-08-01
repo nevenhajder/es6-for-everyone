@@ -1,48 +1,35 @@
-const dogs = new Map();
+// Basic Promise
+// fetch('https://.github.com/users/wesbos')
+//     .then(res => res.json()).then((res) => {
+//         console.log(res);
+//     }).catch((err) => {
+//         console.error(err);
+//     });
 
-dogs.set('Snickers', 3);
-dogs.set('Sunny', 2);
-dogs.set('Hugo', 10);
 
-dogs.forEach((val, key) => console.log(val, key));
+// Chainining promises
+function breathe(amount) {
+    return new Promise((resolve, reject) => {
+        if (amount < 500) {
+            reject('That is too small a value!');
+        }
 
-for (const [val, key] of dogs) {
-    console.log(val, key);
+        // Resolve promise after a delay
+        setTimeout(() => {
+            resolve(`Done for ${amount} ms`);
+        }, amount);
+    });
 }
 
-// Maps allow you to set anything(!) as the key in the key-value pairing
-const buttonMap = new Map();
-const buttons = document.querySelectorAll('button');
-
-buttons.forEach((button) => {
-    // Set each button to be the key in the map
-    buttonMap.set(button, 0);
-    button.addEventListener('click', function () {
-        // Get current click count from the map for this button
-        const val = buttonMap.get(this);
-        buttonMap.set(this, val + 1);
-        console.log(buttonMap);
+breathe(1000)
+    .then((res) => {
+        console.log(res);
+        return breathe(2000);
+    })
+    .then((res) => {
+        console.log(res);
+        return breathe(400);
+    })
+    .catch((err) => {
+        console.error(err);
     });
-});
-
-
-// ----------------------------------------------------------------------------
-
-// Map vs Weak Map
-let dog1 = { name: 'Snickers' };
-let dog2 = { name: 'Sunny' };
-
-const strong = new Map();
-const weak = new WeakMap();
-
-strong.set(dog1, 'Snickers is the best!');
-weak.set(dog2, 'Sunny is second best!');
-
-console.log(strong);
-console.log(weak);
-dog1 = null;
-dog2 = null;
-// In a weak map the reference to dog2 will get garbage collected
-// since the object has been set to null, but the regular map retains the reference.
-console.log(strong);
-console.log(weak);
